@@ -1,16 +1,21 @@
 <script setup>
+import TodoItem from '@/components/TodoItem.vue';
 import TodosCreator from '@/components/TodosCreator.vue';
+
 import { uid } from 'uid';
 import { ref } from 'vue';
+
   const todoList = ref([])
 
   const createTodo = (todo) => {
+    console.log('Received event with:', todo);
     todoList.value.push({
       id: uid(),
       todo,
-      iscompleted: null,
-      isEditing: null,
+      iscompleted: false,
+      isEditing: false,
     })
+    console.log('Updated todoList:', todoList.value); 
   }
 </script>
 
@@ -18,6 +23,7 @@ import { ref } from 'vue';
   <main>
     <h1>Create  Todo</h1>
     <TodosCreator @create-todo="createTodo"/>
+    <TodoItem v-for="todo in todoList"/>
   </main>
 </template>
 
